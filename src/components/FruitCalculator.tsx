@@ -214,7 +214,7 @@ export function FruitCalculator() {
                   ? 'bg-orange-500'
                   : 'bg-green-500'
               }`}
-              style={{ width: `${Math.min((valueDifference / 40) * 100, 100)}%` }}
+              style={{ width: `${Math.min((Number(valueDifference) / 40) * 100, 100)}%` }}
             />
           </div>
         </div>
