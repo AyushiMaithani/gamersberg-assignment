@@ -4,6 +4,7 @@ import React from "react";
 import { useAtom } from "jotai";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import {ArrowUp,ArrowDown} from "lucide-react"
 import { ArrowRight,ArrowLeft, Plus, X } from "lucide-react";
 import Image from "next/image";
 import {
@@ -63,7 +64,7 @@ export function FruitCalculator() {
       </Button>
       <div className="flex justify-between gap-3">
         <div className="relative flex flex-row items-center gap-3">
-          <div className="relative w-10 h-10 overflow-hidden rounded-md">
+          <div className="relative w-12 h-14 overflow-hidden rounded-md">
             <Image
               src={item.image}
               alt={item.name}
@@ -103,19 +104,18 @@ export function FruitCalculator() {
   );
 
   return (
-    <div className="container mx-auto p-6 space-y-8">
+    <div className="container mx-auto p-4">
       <h1 className="text-4xl font-bold text-center mb-8 text-white">Calculator</h1>
       
-      <div className="flex flex-row gap-8 items-center justify-center">
+      <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 justify-center">
         {/* Offer Section */}
-        
-        <div className="space-y-4">
+        <div className="w-full lg:w-[450px]">
           <div className="relative p-[2px] overflow-hidden rounded-3xl">
             <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 animate-gradient"></div>
-            <Card className="relative bg-[#0A0A1B] w-[30vw] border-[#1E1E3F] text-white  rounded-3xl">
-              <CardContent className="p-6">
+            <Card className="relative bg-[#0A0A1B] border-[#1E1E3F] text-white rounded-3xl">
+              <CardContent className="p-4 sm:p-6">
                 <h2 className="text-xl font-semibold mb-4 text-white text-center">Offer ( You )</h2>
-                <div className="flex pl-8 flex-wrap gap-4 overflow-y-scroll scrollbar-hidden h-[35vh] border-2 border-[#1E1E3F] p-4 rounded-md">
+                <div className="flex flex-wrap gap-3 pl-8 overflow-y-auto scrollbar-hidden h-[35vh] border-2 border-[#1E1E3F] p-3 rounded-md">
                   {offerItems.map((item, index) => (
                     <ItemCard
                       key={index}
@@ -137,7 +137,7 @@ export function FruitCalculator() {
               </CardContent>
             </Card>
           </div>
-          <div className="text-center">
+          <div className="hidden lg:block space-y-2 mt-4 text-center">
             <button className="relative p-[2px] overflow-hidden rounded-lg group">
               <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 animate-gradient"></div>
               <div className="relative px-4 py-2 bg-black rounded-lg">
@@ -146,56 +146,61 @@ export function FruitCalculator() {
             </button>
           </div>
         </div>
-
-
+<div className="hidden lg:block pt-44">
         <div className="flex flex-col items-center justify-center">
           <ArrowRight className="text-white  h-8 w-8" />
           <ArrowLeft className="text-white  h-8 w-8" />
         </div>
-
+        </div>
+        <div className="block lg:hidden">
+        <div className="flex  items-center justify-center">
+          <ArrowUp className="text-white  h-8 w-8" />
+          <ArrowDown className="text-white  h-8 w-8" />
+        </div>
+        </div>
 
         {/* Request Section */}
-        <div className="space-y-4">
-  <div className="relative p-[2px] overflow-hidden rounded-3xl">
-    <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 animate-gradient"></div>
-    <Card className="relative bg-[#0A0A1B] w-[30vw] border-[#1E1E3F] text-white rounded-3xl">
-      <CardContent className="p-6">
-        <h2 className="text-xl font-semibold mb-4 text-white text-center">Request ( Them )</h2>
-        <div className="pl-8 flex flex-wrap gap-4 overflow-y-scroll scrollbar-hidden h-[35vh] border-2 border-[#1E1E3F] p-4 rounded-md">
-          {requestItems.map((item, index) => (
-            <ItemCard
-              key={index}
-              item={item}
-              onRemove={() => setRequestItems(requestItems.filter((_, i) => i !== index))}
-            />
-          ))}
-          <Button
-            variant="outline"
-            className="h-[120px] w-[45%] border-2 border-dashed border-[#2A2A4F] bg-black hover:bg-[#1E1E3F] hover:border-white text-white transition-colors"
-            onClick={() => {
-              setActiveSection("request");
-              setIsDialogOpen(true);
-            }}
-          >
-            <Plus className="h-6 w-6 hover:scale-110 transition-transform" />
-          </Button>
+        <div className="w-full lg:w-[450px]">
+          <div className="relative p-[2px] overflow-hidden rounded-3xl">
+            <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 animate-gradient"></div>
+            <Card className="relative bg-[#0A0A1B] border-[#1E1E3F] text-white rounded-3xl">
+              <CardContent className="p-4 sm:p-6">
+                <h2 className="text-xl font-semibold mb-4 text-white text-center">Request ( Them )</h2>
+                <div className="flex flex-wrap gap-3 pl-8 overflow-y-auto scrollbar-hidden h-[35vh] border-2 border-[#1E1E3F] p-3 rounded-md">
+                  {requestItems.map((item, index) => (
+                    <ItemCard
+                      key={index}
+                      item={item}
+                      onRemove={() => setRequestItems(requestItems.filter((_, i) => i !== index))}
+                    />
+                  ))}
+                  <Button
+                    variant="outline"
+                    className="h-[120px] w-[45%] border-2 border-dashed border-[#2A2A4F] bg-black hover:bg-[#1E1E3F] hover:border-white text-white transition-colors"
+                    onClick={() => {
+                      setActiveSection("request");
+                      setIsDialogOpen(true);
+                    }}
+                  >
+                    <Plus className="h-6 w-6 hover:scale-110 transition-transform" />
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+          <div className="hidden text-center lg:block space-y-2 mt-4">
+            <button className="relative p-[2px] overflow-hidden rounded-lg group">
+              <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 animate-gradient"></div>
+              <div className="relative px-4 py-2 bg-black rounded-lg">
+                <p className="text-lg font-semibold text-white">Price: {requestTotalPrice.toLocaleString()}</p>
+              </div>
+            </button>
+          </div>
         </div>
-      </CardContent>
-    </Card>
-  </div>
-  <div className="text-center">
-    <button className="relative p-[2px] overflow-hidden rounded-lg group">
-      <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 animate-gradient"></div>
-      <div className="relative px-4 py-2 bg-black rounded-lg">
-        <p className="text-lg font-semibold text-white">Price: {requestTotalPrice.toLocaleString()}</p>
-      </div>
-    </button>
-  </div>
-</div>
       </div>
 
       {/* Value Difference */}
-      <div className="text-center space-y-2 w-full max-w-sm mx-auto px-4 sm:px-0">
+      <div className="mt-8 text-center space-y-2 w-full max-w-sm mx-auto px-4 sm:px-0">
         <div className="flex items-center justify-center gap-2">
           <div className="text-sm md:text-base text-white">Value Difference:</div>
           <div className="text-sm md:text-base text-[#FF0000]">{valueDifference}%</div>
@@ -250,7 +255,7 @@ export function FruitCalculator() {
       )}
 
     {/* Value Provider */}
-    <div className="text-center">
+    <div className="text-center mt-4">
       <p className="text-sm text-white">Value Provider:</p>
       <select className="mt-2 bg-black text-white border border-[#1E1E3F] rounded-md px-4 py-2">
         <option>Gamersberg</option>
