@@ -41,6 +41,3 @@ interface Fruit {
 }
 ```
 ---
-
-## 📸 Screenshots
-
