@@ -1,5 +1,3 @@
-import Image from "next/image";
-import Rocket from '../../public/RocketFruit.webp';
 
 export interface Item {
   name: string;
