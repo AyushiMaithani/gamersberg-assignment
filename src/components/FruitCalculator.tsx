@@ -26,7 +26,6 @@ import {
 } from "@/store/atoms";
 import { Item,SAMPLE_ITEMS } from "@/types/fruit";
 
-// Utility function to chunk an array
 const chunkArray = (array: Item[], chunkSize: number) => {
   const result: Item[][] = [];
   for (let i = 0; i < array.length; i += chunkSize) {
@@ -34,6 +33,7 @@ const chunkArray = (array: Item[], chunkSize: number) => {
   }
   return result;
 };
+
 
 export function FruitCalculator() {
   const [offerItems, setOfferItems] = useAtom(offerItemsAtom);
@@ -114,36 +114,45 @@ export function FruitCalculator() {
       <h1 className="text-4xl font-bold text-center mb-8 text-white">Calculator</h1>
       
       <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 justify-center">
-        {/* Offer Section */}
-        <div className="w-full lg:w-[450px]">
+       {/* Offer Section */}
+       <div className="w-full lg:w-[450px]">
           <div className="relative p-[2px] overflow-hidden rounded-3xl">
             <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 animate-gradient"></div>
             <Card className="relative bg-[#0A0A1B] border-[#1E1E3F] text-white rounded-3xl">
               <CardContent className="p-4 sm:p-6">
-                <h2 className="text-xl font-semibold mb-4 text-white text-center">Offer ( You )</h2>            
-                <div className="flex flex-wrap gap-3 pl-8 p-3 rounded-md">
+                <h2 className="text-xl font-semibold mb-4 text-white text-center">Offer ( You )</h2>
+                <div className="flex flex-wrap gap-3 p-3 rounded-md">
                   {chunkArray(offerItems, 4).map((chunk, chunkIndex) => (
-                  <div key={chunkIndex} className="mt-4 p-4 border w-[35vw] border-[#2A2A4F] rounded-md text-white text-center">
-                    <div className="flex flex-wrap gap-2 justify-center">
-                      {chunk.map((item, itemIndex) => (
-                        <ItemCard key={itemIndex} item={item} onRemove={() => setOfferItems(offerItems.filter((_, i) => i !== itemIndex))} />
-                      ))}
+                    <div
+                      key={chunkIndex}
+                      className="mt-4 p-4 border w-full border-[#2A2A4F] rounded-md text-white text-center"
+                    >
+                      <div className="flex flex-wrap gap-3 ">
+                        {chunk.map((item, itemIndex) => (
+                          <ItemCard
+                            key={itemIndex}
+                            item={item}
+                            onRemove={() =>
+                              setOfferItems(
+                                offerItems.filter((_, i) => i !== itemIndex)
+                              )
+                            }
+                          />
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
                   <Button
                     variant="outline"
-                    className="h-[120px] w-[45%] border-2 border-dashed border-[#2A2A4F] bg-black hover:bg-[#1E1E3F] text-white"
+                    className="h-[120px] w-[45%] border-2 border-dashed border-[#2A2A4F] bg-black hover:bg-[#1E1E3F] hover:border-white text-white transition-colors"
                     onClick={() => {
                       setActiveSection("offer");
                       setIsDialogOpen(true);
                     }}
                   >
-                    <Plus className="h-6 w-6" />
+                    <Plus className="h-6 w-6 hover:scale-110 transition-transform" />
                   </Button>
                 </div>
-
-                
               </CardContent>
             </Card>
           </div>
@@ -156,17 +165,18 @@ export function FruitCalculator() {
             </button>
           </div>
         </div>
-<div className="hidden lg:block pt-44">
-        <div className="flex flex-col items-center justify-center">
-          <ArrowRight className="text-white  h-8 w-8" />
-          <ArrowLeft className="text-white  h-8 w-8" />
-        </div>
+
+        <div className="hidden lg:block pt-44">
+          <div className="flex flex-col items-center justify-center">
+            <ArrowRight className="text-white h-8 w-8" />
+            <ArrowLeft className="text-white h-8 w-8" />
+          </div>
         </div>
         <div className="block lg:hidden">
-        <div className="flex  items-center justify-center">
-          <ArrowUp className="text-white  h-8 w-8" />
-          <ArrowDown className="text-white  h-8 w-8" />
-        </div>
+          <div className="flex items-center justify-center">
+            <ArrowUp className="text-white h-8 w-8" />
+            <ArrowDown className="text-white h-8 w-8" />
+          </div>
         </div>
 
         {/* Request Section */}
@@ -176,13 +186,26 @@ export function FruitCalculator() {
             <Card className="relative bg-[#0A0A1B] border-[#1E1E3F] text-white rounded-3xl">
               <CardContent className="p-4 sm:p-6">
                 <h2 className="text-xl font-semibold mb-4 text-white text-center">Request ( Them )</h2>
-                <div className="flex flex-wrap gap-3 pl-8 overflow-y-auto scrollbar-hidden h-[35vh] border-2 border-[#1E1E3F] p-3 rounded-md">
-                  {requestItems.map((item, index) => (
-                    <ItemCard
-                      key={index}
-                      item={item}
-                      onRemove={() => setRequestItems(requestItems.filter((_, i) => i !== index))}
-                    />
+                <div className="flex flex-wrap gap-3 p-3 rounded-md">
+                  {chunkArray(requestItems, 4).map((chunk, chunkIndex) => (
+                    <div
+                      key={chunkIndex}
+                      className="mt-4 p-4 border w-full border-[#2A2A4F] rounded-md text-white text-center"
+                    >
+                      <div className="flex flex-wrap gap-3 ">
+                        {chunk.map((item, itemIndex) => (
+                          <ItemCard
+                            key={itemIndex}
+                            item={item}
+                            onRemove={() =>
+                              setRequestItems(
+                                requestItems.filter((_, i) => i !== itemIndex)
+                              )
+                            }
+                          />
+                        ))}
+                      </div>
+                    </div>
                   ))}
                   <Button
                     variant="outline"
@@ -198,7 +221,7 @@ export function FruitCalculator() {
               </CardContent>
             </Card>
           </div>
-          <div className="hidden text-center lg:block space-y-2 mt-4">
+          <div className="hidden lg:block space-y-2 mt-4 text-center">
             <button className="relative p-[2px] overflow-hidden rounded-lg group">
               <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 animate-gradient"></div>
               <div className="relative px-4 py-2 bg-black rounded-lg">
