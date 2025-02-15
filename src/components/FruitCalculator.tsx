@@ -26,8 +26,14 @@ import {
 } from "@/store/atoms";
 import { Item,SAMPLE_ITEMS } from "@/types/fruit";
 
-
-
+// Utility function to chunk an array
+const chunkArray = (array: Item[], chunkSize: number) => {
+  const result: Item[][] = [];
+  for (let i = 0; i < array.length; i += chunkSize) {
+    result.push(array.slice(i, i + chunkSize));
+  }
+  return result;
+};
 
 export function FruitCalculator() {
   const [offerItems, setOfferItems] = useAtom(offerItemsAtom);
@@ -114,18 +120,20 @@ export function FruitCalculator() {
             <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 animate-gradient"></div>
             <Card className="relative bg-[#0A0A1B] border-[#1E1E3F] text-white rounded-3xl">
               <CardContent className="p-4 sm:p-6">
-                <h2 className="text-xl font-semibold mb-4 text-white text-center">Offer ( You )</h2>
-                <div className="flex flex-wrap gap-3 pl-8 overflow-y-auto scrollbar-hidden h-[35vh] border-2 border-[#1E1E3F] p-3 rounded-md">
-                  {offerItems.map((item, index) => (
-                    <ItemCard
-                      key={index}
-                      item={item}
-                      onRemove={() => setOfferItems(offerItems.filter((_, i) => i !== index))}
-                    />
-                  ))}
+                <h2 className="text-xl font-semibold mb-4 text-white text-center">Offer ( You )</h2>            
+                <div className="flex flex-wrap gap-3 pl-8 p-3 rounded-md">
+                  {chunkArray(offerItems, 4).map((chunk, chunkIndex) => (
+                  <div key={chunkIndex} className="mt-4 p-4 border w-[35vw] border-[#2A2A4F] rounded-md text-white text-center">
+                    <div className="flex flex-wrap gap-2 justify-center">
+                      {chunk.map((item, itemIndex) => (
+                        <ItemCard key={itemIndex} item={item} onRemove={() => setOfferItems(offerItems.filter((_, i) => i !== itemIndex))} />
+                      ))}
+                    </div>
+                  </div>
+                ))}
                   <Button
                     variant="outline"
-                    className="h-[120px] w-[45%]  border-2 border-dashed border-[#2A2A4F] bg-black hover:bg-[#1E1E3F] text-white"
+                    className="h-[120px] w-[45%] border-2 border-dashed border-[#2A2A4F] bg-black hover:bg-[#1E1E3F] text-white"
                     onClick={() => {
                       setActiveSection("offer");
                       setIsDialogOpen(true);
@@ -134,6 +142,8 @@ export function FruitCalculator() {
                     <Plus className="h-6 w-6" />
                   </Button>
                 </div>
+
+                
               </CardContent>
             </Card>
           </div>
