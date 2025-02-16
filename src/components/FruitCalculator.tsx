@@ -239,23 +239,33 @@ export function FruitCalculator() {
           <div className="text-sm md:text-base text-[#FF0000]">{valueDifference}%</div>
         </div>
         
-        {/* Value Difference Slider */}
-        <div className="relative w-full sm:w-64 mx-auto">
-          {/* Slider Track */}
-          <div className="h-1 bg-[#1E1E3F] rounded-full">
-            {/* Colored Progress Bar */}
-            <div 
-              className={`h-full rounded-full transition-all ${
-                Number(valueDifference) > 40
-                  ? 'bg-red-500'
-                  : Number(valueDifference) < 0
-                  ? 'bg-orange-500'
-                  : 'bg-green-500'
-              }`}
-              style={{ width: `${Math.min((Number(valueDifference) / 40) * 100, 100)}%` }}
-            />
-          </div>
-        </div>
+     {/* Value Difference Slider */}
+<div className="relative w-full sm:w-64 mx-auto">
+  {/* Slider Track */}
+  <div className="h-1 bg-[#1E1E3F] rounded-full relative">
+    {/* Colored Progress Bar */}
+    <div
+      className={`h-full rounded-full transition-all ${
+        Math.abs(Number(valueDifference)) > 40
+          ? 'bg-red-500'
+          : Number(valueDifference) < 0
+          ? 'bg-orange-500'
+          : 'bg-green-500'
+      }`}
+      style={{
+        width: `${Math.min((Math.max(Math.abs(Number(valueDifference)), 0) / 40) * 100, 100)}%`,
+      }}
+    />
+    {/* Location Marker */}
+    <div
+      className="absolute top-[-8px] left-1/2 transform -translate-x-1/2 bg-white border border-[#1E1E3F] rounded-full w-4 h-4"
+      style={{
+        left: `${Math.min((Math.max(Math.abs(Number(valueDifference)), 20) / 40) * 100, 100)}%`,
+      }}
+    />
+  </div>
+</div>
+
         
         <div className="text-sm md:text-base text-white/50">Max: 40%</div>
       </div>
